@@ -9,10 +9,20 @@
 namespace Pizzy;
 
 /**
- * Set some defined locations
+ * Set some defined locations & Statements
  */
 define('PATH_CONNECTION_INFO', './_private/connection_info.ini');
 
+// Modify Statements
+define('SQL_CREATE_TABLE_GENERIC', 'CREATE TABLE IF NOT EXISTS %tn (%ct)');
+define('SQL_INSERT_GENERIC', 'INSERT INTO %t (%c) VALUES (%v)');
+define('SQL_REPLACE_GENERIC', 'REPLACE INTO %t (%c) VALUES (%v)');
+define('SQL_DELETE_GENERIC', 'DELETE IGNORE FROM %t WHERE %c');
+define('SQL_UPDATE_GENERIC', 'UPDATE %t SET %ufv WHERE %cfv');
+define('SQL_DROP_TABLE_GENERIC', 'DROP TABLE IF EXISTS %tn ');
+
+use \PDO;
+use \PDOException;
 
 /**
  * Class DbPdo
@@ -385,7 +395,7 @@ class DbPdo
      *                           $fv_pairs = array('userid' => 123, 'name' => 'Billy');
      * @param int    $iterations Recursion counter
      *
-     * @return bool|int Last Inserted ID or false
+     * @return bool Result
      */
     private function _modifySingle($sql, $table, $fv_pairs, $iterations = 0)
     {
@@ -396,7 +406,7 @@ class DbPdo
             $value_str[$f] = ':' . $f;
         }
 
-        $this->results = 0;
+        $this->results = false;
         try {
             // Start the transaction
             $this->db->beginTransaction();
@@ -421,7 +431,7 @@ class DbPdo
 
             // attempt to commit the transaction
             $this->db->commit();
-            $this->results = $this->db->lastInsertId($this->_returnIdColumn($table));
+            $this->results = true;
         } catch (PDOException $e) {
             // Attempt to recreate the PDO
             if (!$iterations) {
@@ -489,16 +499,5 @@ class DbPdo
         }
 
         return $this->results;
-    }
-
-    private function _returnIdColumn($table)
-    {
-        $name = '';
-        switch ($table) {
-            case TABLE_USERS:
-                $name = USERS_ID;
-                break;
-        }
-        return $name;
     }
 }
