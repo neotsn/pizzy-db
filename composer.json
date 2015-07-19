@@ -1,5 +1,5 @@
 {
-  "name":"pizzy/dbpdo",
+  "name":"Pizzy/DbPdo",
   "description": "DB PDO for thepizzy.net lab projects",
   "authors": [
     {
@@ -7,7 +7,6 @@
       "email": "pizzy-db@thepizzy.net"
     }
   ],
-  "minimum-stability": "dev",
   "repositories": [
     {
       "type": "vcs",
@@ -15,8 +14,8 @@
     }
   ],
   "autoload": {
-    "psr-0": {
-      "Pizzy": "src/"
+    "psr-4": {
+      "Pizzy\\": "src/"
     }
   }
 }
