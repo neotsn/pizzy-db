@@ -1,0 +1,22 @@
+{
+  "name":"pizzy/dbpdo",
+  "description": "DB PDO for thepizzy.net lab projects",
+  "authors": [
+    {
+      "name": "@neotsn",
+      "email": "pizzy-db@thepizzy.net"
+    }
+  ],
+  "minimum-stability": "dev",
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/neotsn/pizzy-db"
+    }
+  ],
+  "autoload": {
+    "psr-0": {
+      "Pizzy": "src/"
+    }
+  }
+}
